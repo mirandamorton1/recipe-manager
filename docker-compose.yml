@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    command: 'npm run dev'
+    # depends_on:
+    #   - postgres
+    env_file:
+      - .env.default
+    ports:
+      - '3000:3000'
+    volumes:
+      - './package.json:/service/package.json'
+      - './package-lock.json:/service/package-lock.json'
+      - './public:/service/public'
+      - './src:/service/src'
+
+  ## -- Uncomment to use Postgres -- ##
+  # postgres:
+  #   image: postgres:14
+  #   environment:
+  #     POSTGRES_HOST_AUTH_METHOD: trust
+  #   expose:
+  #     - "5432"
