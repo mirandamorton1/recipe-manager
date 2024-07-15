@@ -51,9 +51,9 @@ Please **check the box** for each one that you implement to help us know what to
 \* **Note:** Multiple 2FA strategies exist.  If you choose to implement one that "sends" a code by email or text, you can emulate that by logging the code to your local terminal.  _(No need to pay real :dollar: to complete this challenge. :sweat_smile:)_
 
 ## :checkered_flag: Submitting your app
-1.  Feel free to **push directly to this repo** as you work on your solution.  Consider it your personal sandbox. 👍
-1.  Next, when you are ready to **submit your app**, [create a new release for the repo](https://docs.github.com/en/github/administering-a-repository/releasing-projects-on-github/managing-releases-in-a-repository#creating-a-release).
-1.  Then send us a [link to your release](https://docs.github.com/en/github/administering-a-repository/releasing-projects-on-github/linking-to-releases).
+1.  Feel free to **push directly to a new branch on this repo** as you work on your solution.  Consider it your personal sandbox. 👍
+1.  Github Classroom will autogenerate a "review PR" for you branch.  **Please DON'T merge that.**
+1.  When you're ready to submit your solution, **send a link for your branch** to the recruiter.
 1.  Our team will **review your solution** within a few days.
 1.  Aftward, we will **follow-up with you** to talk about next steps.
 
