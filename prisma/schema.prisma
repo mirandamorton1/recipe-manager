@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement()) // Auto-incrementing ID
+  name      String                                // User's name
+  email     String   @unique                     // Unique email address
+  password  String                              // User's password (hashed)
+  isActive  Boolean  @default(true)             // Whether the user is active
+  role      Role     @default(USER)             // User role (USER or ADMIN)
+  recipes   Recipe[]                            // Relationship: One user can have many recipes
+  createdAt DateTime @default(now())            // Timestamp for when user is created
+  updatedAt DateTime @updatedAt                 // Auto-updated timestamp
+}
+
+model Recipe {
+  id          Int       @id @default(autoincrement()) // Auto-incrementing ID
+  title       String                                 // Recipe title
+  type        String                                 // Recipe type (e.g., beef, soup, vegetarian)
+  ingredients String[]                               // Array of ingredients
+  instructions String[]                              // Array of instructions
+  notes       String?                                // Optional notes for the recipe
+  location    String                                 // Location (e.g., link or cookbook reference)
+  photo       String?                                // URL to the recipe photo
+  isFavorite  Boolean   @default(false)             // Whether the recipe is a favorite
+  userId      Int                                    // Foreign key to User
+  user        User      @relation(fields: [userId], references: [id]) // Relationship
+  createdAt   DateTime  @default(now())              // Timestamp for when recipe is created
+  updatedAt   DateTime  @updatedAt                   // Auto-updated timestamp
+}
+
+enum Role {
+  USER
+  ADMIN
+}
