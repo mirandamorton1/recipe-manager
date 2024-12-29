@@ -5,7 +5,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch('/api/users/logout', {
+      const res = await fetch('/api/auth/logout', {
         method: 'POST',
       });
 

@@ -14,7 +14,7 @@ const Signup = () => {
     setError('');
 
     try {
-      const res = await fetch('/api/users/signup', {
+      const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

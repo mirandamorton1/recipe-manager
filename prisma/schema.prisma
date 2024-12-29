@@ -14,31 +14,32 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement()) // Auto-incrementing ID
-  name      String                                // User's name
-  email     String   @unique                     // Unique email address
-  password  String                              // User's password (hashed)
-  isActive  Boolean  @default(true)             // Whether the user is active
-  role      Role     @default(USER)             // User role (USER or ADMIN)
-  recipes   Recipe[]                            // Relationship: One user can have many recipes
-  createdAt DateTime @default(now())            // Timestamp for when user is created
-  updatedAt DateTime @updatedAt                 // Auto-updated timestamp
+  id        Int      @id @default(autoincrement()) 
+  name      String                               
+  email     String   @unique                   
+  password  String
+  salt      String                        
+  isActive  Boolean  @default(true)            
+  role      Role     @default(USER)           
+  recipes   Recipe[]                         
+  createdAt DateTime @default(now())            
+  updatedAt DateTime @updatedAt                 
 }
 
 model Recipe {
-  id          Int       @id @default(autoincrement()) // Auto-incrementing ID
-  title       String                                 // Recipe title
-  type        String                                 // Recipe type (e.g., beef, soup, vegetarian)
-  ingredients String[]                               // Array of ingredients
-  instructions String[]                              // Array of instructions
-  notes       String?                                // Optional notes for the recipe
-  location    String                                 // Location (e.g., link or cookbook reference)
-  photo       String?                                // URL to the recipe photo
-  isFavorite  Boolean   @default(false)             // Whether the recipe is a favorite
-  userId      Int                                    // Foreign key to User
-  user        User      @relation(fields: [userId], references: [id]) // Relationship
-  createdAt   DateTime  @default(now())              // Timestamp for when recipe is created
-  updatedAt   DateTime  @updatedAt                   // Auto-updated timestamp
+  id          Int       @id @default(autoincrement()) 
+  title       String                                
+  type        String                               
+  ingredients String[]                              
+  instructions String[]                             
+  notes       String?                                
+  location    String                                
+  photo       String?                                
+  isFavorite  Boolean   @default(false)           
+  userId      Int                                   
+  user        User      @relation(fields: [userId], references: [id]) 
+  createdAt   DateTime  @default(now())              
+  updatedAt   DateTime  @updatedAt                   
 }
 
 enum Role {

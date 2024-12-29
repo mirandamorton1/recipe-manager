@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@prisma/client": "^6.1.0",
+    "dotenv": "^16.4.7",
+    "jsonwebtoken": "^9.0.2",
     "next": "^14.2.22",
     "prisma": "^6.1.0",
     "react": "^18",
