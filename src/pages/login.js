@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -69,6 +70,14 @@ const Login = () => {
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
+      <div>
+        <p>
+          Don&apos;t have an account?
+          <Link href="/signup">
+            <p>Sign up here</p>
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };

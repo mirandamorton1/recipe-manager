@@ -2,6 +2,7 @@ import authorize from '../../../middleware/authorize';
 
 const meHandler = async (req, res) => {
   if (req.method === 'GET') {
+    // console.log('Authenticated user:', req.user);
     return res.status(200).json({
       userId: req.user.userId,
       email: req.user.email,
