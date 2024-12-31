@@ -5,13 +5,13 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false); // Added a loading state
+  const [loading, setLoading] = useState(false); 
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setLoading(true); // Start loading
+    setLoading(true);
 
     try {
       const res = await fetch('/api/auth/login', {
@@ -19,6 +19,7 @@ const Login = () => {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
       });
 
@@ -33,7 +34,7 @@ const Login = () => {
       setError('An error occurred. Please try again later.');
       console.error('Login error:', err);
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false); 
     }
   };
 

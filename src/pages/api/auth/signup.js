@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import logger from '../../../utils/logger'
 
 dotenv.config();
 
@@ -18,15 +19,20 @@ const hashPassword = (password, salt) => {
 const signupHandler = async (req, res) => {
   if (req.method === 'POST') {
     const { name, email, password } = req.body;
-    console.log('Received request body:', req.body);
+
+    const sanitizedEmail = `${email.split("@")[0][0]}*****@${
+      email.split("@")[1]
+    }`;
+
+    const sanitizedName = "User";
 
     try {
-      console.log('Hashing password for user:', email);
+      // logger.info('Hashing password for user:', `${email}`);
       
       const salt = crypto.randomBytes(16).toString('hex'); 
       const hashedPassword = hashPassword(password, salt); 
 
-      console.log('Password hashed successfully:', hashedPassword);
+      // logger.info('Password hashed successfully:', hashedPassword);
 
       const user = await prisma.user.create({
         data: {
@@ -37,7 +43,7 @@ const signupHandler = async (req, res) => {
         },
       });
 
-      console.log('User created successfully:', user);
+      logger.info(`User created successfully: ${sanitizedName} (${sanitizedEmail})`);
 
       const token = jwt.sign(
         { userId: user.id, email: user.email },
@@ -50,10 +56,10 @@ const signupHandler = async (req, res) => {
         `token=${token}; HttpOnly; Path=/; Max-Age=3600; SameSite=Strict; Secure`
       );
 
-      console.log(`[INFO] Signup successful for user ID: ${user.id}`);
+      logger.info(`[INFO] Signup successful for user ID: ${user.id}`);
       return res.status(201).json({ message: 'Signup successful' });
     } catch (error) {
-      console.error('Error occurred during user creation:', error);
+      logger.error('Error occurred during user creation:', error);
       return res.status(500).json({ message: 'Something went wrong' });
     }
   } else {

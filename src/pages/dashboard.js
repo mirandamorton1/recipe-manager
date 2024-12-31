@@ -1,27 +1,47 @@
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 const Dashboard = () => {
+  const [user, setUser] = useState(null);
   const router = useRouter();
 
-  const handleLogout = async () => {
-    try {
-      const res = await fetch('/api/auth/logout', {
-        method: 'POST',
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const res = await fetch('/api/auth/me', {
+        method: 'GET',
+        credentials: 'include', 
       });
 
       if (res.ok) {
-        router.push('/login');
+        const data = await res.json();
+        setUser(data);
       } else {
-        console.error('Failed to logout');
+        router.push('/login'); 
       }
-    } catch (err) {
-      console.error('An error occurred while logging out', err);
+    };
+
+    fetchUserData();
+  }, [router]);
+
+  const handleLogout = async () => {
+    const res = await fetch('/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include', 
+    });
+
+    if (res.ok) {
+      router.push('/login'); 
+    } else {
+      console.error('Logout failed');
     }
   };
 
+  if (!user) return <div>Loading...</div>;
+
   return (
     <div>
-      <h1>You are now logged in</h1>
+      <h1>Dashboard</h1>
+      <p>Welcome, {user.email}</p>
       <button onClick={handleLogout}>Logout</button>
     </div>
   );
