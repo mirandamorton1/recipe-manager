@@ -1,33 +1,44 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import RecipeCard from '@/components/RecipeCard';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import RecipeCard from "@/components/RecipeCard";
+import Sidebar from "@/components/SideBar";
+import styles from "../styles/Dashboard.module.scss";
+import { FiMenu } from "react-icons/fi";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const router = useRouter();
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('/api/auth/me', {
-          method: 'GET',
-          credentials: 'include',
+        const res = await fetch("/api/auth/me", {
+          method: "GET",
+          credentials: "include",
         });
 
         if (res.ok) {
           const data = await res.json();
           const updatedUser = { ...data, id: data.userId };
           if (!user || user.id !== updatedUser.id) {
-            // console.log("Fetched user data:", updatedUser);
+            console.log("Fetched user data:", updatedUser);
             setUser(updatedUser);
             // console.log("Fetching recipes for userId:", updatedUser.id);
-            const recipesRes = await fetch(`/api/recipes?id=${updatedUser.id}`, {
-              method: 'GET',
-              credentials: 'include',
-            });
+            const recipesRes = await fetch(
+              `/api/recipes?id=${updatedUser.id}`,
+              {
+                method: "GET",
+                credentials: "include",
+              }
+            );
 
             if (recipesRes.ok) {
               const recipesData = await recipesRes.json();
@@ -38,7 +49,7 @@ const Dashboard = () => {
             }
           }
         } else {
-          router.push('/login'); 
+          router.push("/login");
         }
       } catch (err) {
         console.error(err.message);
@@ -49,37 +60,38 @@ const Dashboard = () => {
     };
 
     fetchData();
-  }, [router, user]); 
+  }, [router, user]);
 
   const handleLogout = async () => {
-    const res = await fetch('/api/auth/logout', {
-      method: 'POST',
-      credentials: 'include',
+    const res = await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
     });
 
     if (res.ok) {
-      router.push('/login');
+      router.push("/login");
     } else {
-      console.error('Logout failed');
+      console.error("Logout failed");
     }
   };
 
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>Welcome, {user?.email}</p>
-      <button onClick={handleLogout}>Logout</button>
+    <div className={styles.dashboard}>
+      <div className={styles.header}>
+        <button className={styles.menuButton} onClick={toggleSidebar}>
+          <FiMenu size={24} />
+        </button>
+        <h1>Welcome, {user.name}</h1>
+      </div>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
-      <div>
-        {recipes.length === 0 ? (
-          <p>No recipes found. Get started by creating your first recipe!</p>
-        ) : (
-          recipes.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />)
-        )}
+      <div className={styles.content}>
+        {recipes.map((recipe) => (
+          <RecipeCard key={recipe.id} recipe={recipe} />
+        ))}
       </div>
     </div>
   );

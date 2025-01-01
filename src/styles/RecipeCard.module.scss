@@ -1,0 +1,106 @@
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+  
+  .type {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 16px;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .linkButton {
+    background: none;
+    border: none;
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.9rem;
+  
+    &:hover {
+      color: #0056b3;
+    }
+  }
+  
+  .icon {
+    font-size: 1.2rem;
+    cursor: pointer;
+  
+    &:hover {
+      color: #007bff;
+    }
+  }
+  
+  .heartFilled {
+    color: red;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modalContent {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+  }
+  
+  .closeButton {
+    background: #ccc;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  
+    &:hover {
+      background: #bbb;
+    }
+  }
+  
+  .saveButton {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  
+    &:hover {
+      background: #0056b3;
+    }
+  }
+  
+  .textArea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 16px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
