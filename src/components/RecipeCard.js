@@ -24,13 +24,13 @@ const RecipeCard = ({ recipe, onFavoriteToggle, onLocationClick }) => {
           className={styles.linkButton}
           onClick={() => setShowIngredientsModal(true)}
         >
-          See Ingredients
+          Ingredients
         </button>
         <button
           className={styles.linkButton}
           onClick={() => setShowInstructionsModal(true)}
         >
-          See Instructions
+          Instructions
         </button>
         <button
           className={styles.linkButton}
@@ -72,7 +72,6 @@ const RecipeCard = ({ recipe, onFavoriteToggle, onLocationClick }) => {
         </div>
       )}
 
-      {/* Instructions Modal */}
       {showInstructionsModal && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
@@ -88,7 +87,6 @@ const RecipeCard = ({ recipe, onFavoriteToggle, onLocationClick }) => {
         </div>
       )}
 
-      {/* Notes Modal */}
       {showNotesModal && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
@@ -113,7 +111,6 @@ const RecipeCard = ({ recipe, onFavoriteToggle, onLocationClick }) => {
         </div>
       )}
 
-      {/* Location Modal */}
       {showLocationModal && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>

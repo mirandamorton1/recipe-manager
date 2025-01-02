@@ -1,7 +1,29 @@
 import React from 'react';
+import { useState } from 'react';
 import styles from '../styles/Sidebar.module.scss';
+import ProfileModal from '../components/ProfileModal';
+import FavoritesModal from '../components/FavoritesModal';
+import NewRecipeModal from '../components/NewRecipeModal';
 
-const Sidebar = ({ isOpen, toggleSidebar }) => {
+const Sidebar = ({ isOpen, toggleSidebar, logout, user, favorites, recipes, addRecipe }) => {
+  const [isProfileModalOpen, setProfileModalOpen] = useState(false);
+  const [isFavoritesModalOpen, setFavoritesModalOpen] = useState(false);
+  const [isNewRecipeModalOpen, setNewRecipeModalOpen] = useState(false);
+
+  const openProfileModal = () => setProfileModalOpen(true);
+  const closeProfileModal = () => setProfileModalOpen(false);
+
+  const openFavoritesModal = () => setFavoritesModalOpen(true);
+  const closeFavoritesModal = () => setFavoritesModalOpen(false);
+
+  const openNewRecipeModal = () => setNewRecipeModalOpen(true);
+  const closeNewRecipeModal = () => setNewRecipeModalOpen(false);
+
+  const handleLogout = () => {
+    logout(); 
+    toggleSidebar(); 
+  };
+
   if (!isOpen) return null; 
 
   return (
@@ -10,11 +32,15 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         Close
       </button>
       <ul className={styles.sidebarMenu}>
-        <li>Profile</li>
-        <li>My Favorites</li>
-        <li>New Recipe</li>
-        <li>Logout</li>
+        <li onClick={openProfileModal}>Profile</li>
+        <li onClick={openFavoritesModal}>My Favorites</li>
+        <li onClick={openNewRecipeModal}>New Recipe</li>
+        <li onClick={handleLogout}>Logout</li>
       </ul>
+
+      {isProfileModalOpen && <ProfileModal user={user} close={closeProfileModal} />}
+      {isFavoritesModalOpen && <FavoritesModal favorites={favorites} close={closeFavoritesModal} recipes={recipes} />}
+      {isNewRecipeModalOpen && <NewRecipeModal userId={user.id} close={closeNewRecipeModal} addRecipe={addRecipe} toggleSidebar={toggleSidebar} />}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import RecipeCard from "@/components/RecipeCard";
-import Sidebar from "@/components/SideBar";
+import Sidebar from "@/components/Sidebar";
 import styles from "../styles/Dashboard.module.scss";
 import { FiMenu } from "react-icons/fi";
 
@@ -12,6 +12,13 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const router = useRouter();
+
+  //generic for now, define this later as what user favorites on recipe card
+  const [favorites, setFavorites] = useState([]);
+
+  const addRecipe = (newRecipe) => {
+    setRecipes((prevRecipes) => [...prevRecipes, newRecipe]);
+  };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -86,7 +93,7 @@ const Dashboard = () => {
         <h1>Welcome, {user.name}</h1>
       </div>
 
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} logout={handleLogout} user={user} favorites={favorites} recipes={recipes} addRecipe={addRecipe}/>
 
       <div className={styles.content}>
         {recipes.map((recipe) => (

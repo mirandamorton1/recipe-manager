@@ -27,6 +27,35 @@ const handler = async (req, res) => {
     }
   }
 
+  if (method === 'POST') {
+    const { title, type, ingredients, instructions, notes, location, userId } = req.body;
+
+    if (!title || !type || !ingredients || !instructions || !userId) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    try {
+      const newRecipe = await prisma.recipe.create({
+        data: {
+          title,
+          type,
+          ingredients,
+          instructions,
+          notes,
+          location,
+          userId: Number(userId), 
+        },
+      });
+
+      return res.status(201).json(newRecipe);
+    } catch (error) {
+      console.error('Error creating recipe:', error);
+      return res.status(500).json({ error: 'Failed to create recipe' });
+    } finally {
+      await prisma.$disconnect();
+    }
+  }
+
   return res.status(405).json({ error: 'Method Not Allowed' });
 };
 
