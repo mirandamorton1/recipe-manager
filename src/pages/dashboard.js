@@ -11,10 +11,8 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const router = useRouter();
-
-  //generic for now, define this later as what user favorites on recipe card
   const [favorites, setFavorites] = useState([]);
+  const router = useRouter();
 
   const addRecipe = (newRecipe) => {
     setRecipes((prevRecipes) => [...prevRecipes, newRecipe]);
@@ -23,6 +21,29 @@ const Dashboard = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  const handleFavoriteToggle = async (recipe) => {
+    const isFavorited = favorites.some((fav) => fav.id === recipe.id);
+  
+    const res = await fetch(`/api/recipes/${recipe.id}`, {
+      method: isFavorited ? 'DELETE' : 'POST', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  
+    if (res.ok) {
+      const updatedRecipe = await res.json();
+      if (isFavorited) {
+        setFavorites(favorites.filter((fav) => fav.id !== recipe.id));
+      } else {
+        setFavorites([...favorites, updatedRecipe]);
+      }
+    } else {
+      console.error("Failed to update favorite status");
+    }
+  };
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,7 +118,7 @@ const Dashboard = () => {
 
       <div className={styles.content}>
         {recipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
+          <RecipeCard key={recipe.id} recipe={recipe} favorites={favorites} handleFavoriteToggle={handleFavoriteToggle} />
         ))}
       </div>
     </div>

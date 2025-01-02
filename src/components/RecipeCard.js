@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import styles from '../styles/RecipeCard.module.scss';
-import { FaHeart, FaRegHeart, FaMapMarkerAlt } from 'react-icons/fa';
+import React, { useState } from "react";
+import styles from "../styles/RecipeCard.module.scss";
+import { FaHeart, FaRegHeart, FaMapMarkerAlt } from "react-icons/fa";
+import IngredientsModal from "./FavoritesModal";
+import InstructionsModal from "./InstructionsModal";
+import NotesModal from "./NotesModal";
+import LocationModal from "./LocationModal";
 
-const RecipeCard = ({ recipe, onFavoriteToggle, onLocationClick }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+const RecipeCard = ({ recipe, handleFavoriteToggle, favorites }) => {
   const [showIngredientsModal, setShowIngredientsModal] = useState(false);
   const [showInstructionsModal, setShowInstructionsModal] = useState(false);
   const [showNotesModal, setShowNotesModal] = useState(false);
   const [showLocationModal, setShowLocationModal] = useState(false);
 
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    onFavoriteToggle(recipe); 
-  };
+  const isFavorited = favorites.some((fav) => fav.id === recipe.id);
 
   return (
     <div className={styles.card}>
       <h2 className={styles.title}>{recipe.title}</h2>
       <p className={styles.type}>{recipe.type}</p>
-      
+
       <div className={styles.actions}>
         <button
           className={styles.linkButton}
@@ -42,95 +42,49 @@ const RecipeCard = ({ recipe, onFavoriteToggle, onLocationClick }) => {
           className={styles.icon}
           onClick={() => setShowLocationModal(true)}
         />
-        {isFavorite ? (
+        {isFavorited ? (
           <FaHeart
-            className={`${styles.icon} ${styles.heartFilled}`}
-            onClick={toggleFavorite}
+            style={{ cursor: "pointer", color: "red" }}
+            onClick={() => handleFavoriteToggle(recipe)} 
           />
         ) : (
-          <FaRegHeart className={styles.icon} onClick={toggleFavorite} />
+          <FaRegHeart
+            style={{ cursor: "pointer", color: "black" }}
+            onClick={() => handleFavoriteToggle(recipe)}
+          />
         )}
       </div>
 
       {/* Ingredients Modal */}
       {showIngredientsModal && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <h3>Ingredients</h3>
-            <ul>
-              {recipe.ingredients.map((ingredient, index) => (
-                <li key={index}>{ingredient}</li>
-              ))}
-            </ul>
-            <button
-              className={styles.closeButton}
-              onClick={() => setShowIngredientsModal(false)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
+        <IngredientsModal
+          recipe={recipe}
+          closeModal={() => setShowIngredientsModal(false)}
+        />
       )}
 
       {showInstructionsModal && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <h3>Instructions</h3>
-            <p>{recipe.instructions}</p>
-            <button
-              className={styles.closeButton}
-              onClick={() => setShowInstructionsModal(false)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
+        <InstructionsModal
+          recipe={recipe}
+          closeModal={() => setShowInstructionsModal(false)}
+        />
       )}
 
       {showNotesModal && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <h3>Notes</h3>
-            <textarea
-              defaultValue={recipe.notes}
-              className={styles.textArea}
-            ></textarea>
-            <button
-              className={styles.saveButton}
-              onClick={() => setShowNotesModal(false)}
-            >
-              Save
-            </button>
-            <button
-              className={styles.closeButton}
-              onClick={() => setShowNotesModal(false)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
+        <NotesModal
+          recipe={recipe}
+          closeModal={() => setShowNotesModal(false)}
+        />
       )}
 
       {showLocationModal && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <h3>Location</h3>
-            <p>{recipe.location}</p>
-            <button
-              className={styles.closeButton}
-              onClick={() => setShowLocationModal(false)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
+        <LocationModal
+          recipe={recipe}
+          closeModal={() => setShowLocationModal(false)}
+        />
       )}
-
     </div>
   );
 };
 
 export default RecipeCard;
-
-  
-  

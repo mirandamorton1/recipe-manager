@@ -1,11 +1,20 @@
-import React from 'react';
-import { useState } from 'react';
-import styles from '../styles/Sidebar.module.scss';
-import ProfileModal from '../components/ProfileModal';
-import FavoritesModal from '../components/FavoritesModal';
-import NewRecipeModal from '../components/NewRecipeModal';
+import React from "react";
+import { useState } from "react";
+import styles from "../styles/Sidebar.module.scss";
+import ProfileModal from "../components/ProfileModal";
+import FavoritesModal from "../components/FavoritesModal";
+import NewRecipeModal from "../components/NewRecipeModal";
+import RecipeCard from "../components/RecipeCard";
 
-const Sidebar = ({ isOpen, toggleSidebar, logout, user, favorites, recipes, addRecipe }) => {
+const Sidebar = ({
+  isOpen,
+  toggleSidebar,
+  logout,
+  user,
+  favorites,
+  recipes,
+  addRecipe,
+}) => {
   const [isProfileModalOpen, setProfileModalOpen] = useState(false);
   const [isFavoritesModalOpen, setFavoritesModalOpen] = useState(false);
   const [isNewRecipeModalOpen, setNewRecipeModalOpen] = useState(false);
@@ -20,11 +29,11 @@ const Sidebar = ({ isOpen, toggleSidebar, logout, user, favorites, recipes, addR
   const closeNewRecipeModal = () => setNewRecipeModalOpen(false);
 
   const handleLogout = () => {
-    logout(); 
-    toggleSidebar(); 
+    logout();
+    toggleSidebar();
   };
 
-  if (!isOpen) return null; 
+  if (!isOpen) return null;
 
   return (
     <div className={styles.sidebar}>
@@ -38,9 +47,23 @@ const Sidebar = ({ isOpen, toggleSidebar, logout, user, favorites, recipes, addR
         <li onClick={handleLogout}>Logout</li>
       </ul>
 
-      {isProfileModalOpen && <ProfileModal user={user} close={closeProfileModal} />}
-      {isFavoritesModalOpen && <FavoritesModal favorites={favorites} close={closeFavoritesModal} recipes={recipes} />}
-      {isNewRecipeModalOpen && <NewRecipeModal userId={user.id} close={closeNewRecipeModal} addRecipe={addRecipe} toggleSidebar={toggleSidebar} />}
+      {isProfileModalOpen && (
+        <ProfileModal user={user} close={closeProfileModal} />
+      )}
+      {isFavoritesModalOpen && (
+        <FavoritesModal
+          favorites={favorites}
+          close={closeFavoritesModal}
+        />
+      )}
+      {isNewRecipeModalOpen && (
+        <NewRecipeModal
+          userId={user.id}
+          close={closeNewRecipeModal}
+          addRecipe={addRecipe}
+          toggleSidebar={toggleSidebar}
+        />
+      )}
     </div>
   );
 };
