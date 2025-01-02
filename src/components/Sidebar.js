@@ -4,16 +4,14 @@ import styles from "../styles/Sidebar.module.scss";
 import ProfileModal from "../components/ProfileModal";
 import FavoritesModal from "../components/FavoritesModal";
 import NewRecipeModal from "../components/NewRecipeModal";
-import RecipeCard from "../components/RecipeCard";
-
 const Sidebar = ({
   isOpen,
   toggleSidebar,
   logout,
   user,
   favorites,
-  recipes,
   addRecipe,
+  setUser,
 }) => {
   const [isProfileModalOpen, setProfileModalOpen] = useState(false);
   const [isFavoritesModalOpen, setFavoritesModalOpen] = useState(false);
@@ -48,7 +46,7 @@ const Sidebar = ({
       </ul>
 
       {isProfileModalOpen && (
-        <ProfileModal user={user} close={closeProfileModal} />
+        <ProfileModal user={user} close={closeProfileModal} updateUser={setUser}  />
       )}
       {isFavoritesModalOpen && (
         <FavoritesModal

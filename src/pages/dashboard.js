@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import RecipeCard from "@/components/RecipeCard";
 import Sidebar from "@/components/Sidebar";
+import ConfirmationModal from "../components/ConfirmationModal";
 import styles from "../styles/Dashboard.module.scss";
 import { FiMenu } from "react-icons/fi";
 
@@ -12,10 +13,46 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [recipeToDelete, setRecipeToDelete] = useState(null);
+  const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
+  const [currentRecipe, setCurrentRecipe] = useState(null); 
   const router = useRouter();
 
   const addRecipe = (newRecipe) => {
     setRecipes((prevRecipes) => [...prevRecipes, newRecipe]);
+  };
+
+  const handleDeleteClick = (recipe) => {
+    console.log("Deleting recipe:", recipe);
+    setRecipeToDelete(recipe);
+    setIsConfirmationModalOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (recipeToDelete) {
+      const res = await fetch(`/api/recipes/${recipeToDelete.id}`, {
+        method: "DELETE",
+      });
+  
+      if (res.ok) {
+        // Update the local state to remove the deleted recipe
+        setRecipes((prevRecipes) =>
+          prevRecipes.filter((recipe) => recipe.id !== recipeToDelete.id)
+        );
+        setFavorites((prevFavorites) =>
+          prevFavorites.filter((fav) => fav.id !== recipeToDelete.id)
+        );
+      } else {
+        console.error("Failed to delete recipe");
+      }
+    }
+    setIsConfirmationModalOpen(false);
+  };
+  
+
+  const handleDeleteCancel = () => {
+    setIsConfirmationModalOpen(false);
   };
 
   const toggleSidebar = () => {
@@ -24,14 +61,14 @@ const Dashboard = () => {
 
   const handleFavoriteToggle = async (recipe) => {
     const isFavorited = favorites.some((fav) => fav.id === recipe.id);
-  
+
     const res = await fetch(`/api/recipes/${recipe.id}`, {
-      method: isFavorited ? 'DELETE' : 'POST', 
+      method: isFavorited ? "DELETE" : "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
-  
+
     if (res.ok) {
       const updatedRecipe = await res.json();
       if (isFavorited) {
@@ -114,13 +151,36 @@ const Dashboard = () => {
         <h1>Welcome, {user.name}</h1>
       </div>
 
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} logout={handleLogout} user={user} favorites={favorites} recipes={recipes} addRecipe={addRecipe}/>
+      <Sidebar
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+        logout={handleLogout}
+        user={user}
+        favorites={favorites}
+        recipes={recipes}
+        addRecipe={addRecipe}
+        setUser={setUser}
+      />
 
       <div className={styles.content}>
         {recipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} favorites={favorites} handleFavoriteToggle={handleFavoriteToggle} />
+          <RecipeCard
+            key={recipe.id}
+            recipe={recipe}
+            favorites={favorites}
+            handleFavoriteToggle={handleFavoriteToggle}
+            handleDeleteClick={handleDeleteClick}
+          />
         ))}
       </div>
+
+      {isConfirmationModalOpen && (
+        <ConfirmationModal
+          onConfirm={handleDeleteConfirm}
+          onCancel={handleDeleteCancel}
+          recipe={recipeToDelete}
+        />
+      )}
     </div>
   );
 };

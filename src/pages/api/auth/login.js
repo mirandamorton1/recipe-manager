@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../../../prisma/prisma"
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -6,7 +6,6 @@ import logger from "../../../utils/logger";
 
 dotenv.config();
 
-const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET;
 const HASH_ALGORITHM = "sha256";
 

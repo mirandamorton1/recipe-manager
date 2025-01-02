@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../../../prisma/prisma";
 import authorize from '../../../middleware/authorize';
-
-const prisma = new PrismaClient();
 
 const meHandler = async (req, res) => {
   if (req.method === 'GET') {

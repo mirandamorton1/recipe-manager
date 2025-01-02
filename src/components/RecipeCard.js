@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import styles from "../styles/RecipeCard.module.scss";
-import { FaHeart, FaRegHeart, FaMapMarkerAlt } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaMapMarkerAlt, FaTrash } from "react-icons/fa";
 import IngredientsModal from "./FavoritesModal";
 import InstructionsModal from "./InstructionsModal";
 import NotesModal from "./NotesModal";
 import LocationModal from "./LocationModal";
 
-const RecipeCard = ({ recipe, handleFavoriteToggle, favorites }) => {
+const RecipeCard = ({
+  recipe,
+  handleFavoriteToggle,
+  favorites,
+  handleDeleteClick,
+}) => {
   const [showIngredientsModal, setShowIngredientsModal] = useState(false);
   const [showInstructionsModal, setShowInstructionsModal] = useState(false);
   const [showNotesModal, setShowNotesModal] = useState(false);
@@ -16,7 +21,13 @@ const RecipeCard = ({ recipe, handleFavoriteToggle, favorites }) => {
 
   return (
     <div className={styles.card}>
-      <h2 className={styles.title}>{recipe.title}</h2>
+      <div>
+        <h2 className={styles.title}>{recipe.title}</h2>
+        <FaTrash
+          style={{ cursor: "pointer" }}
+          onClick={() => handleDeleteClick(recipe)}
+        />
+      </div>
       <p className={styles.type}>{recipe.type}</p>
 
       <div className={styles.actions}>
@@ -45,7 +56,7 @@ const RecipeCard = ({ recipe, handleFavoriteToggle, favorites }) => {
         {isFavorited ? (
           <FaHeart
             style={{ cursor: "pointer", color: "red" }}
-            onClick={() => handleFavoriteToggle(recipe)} 
+            onClick={() => handleFavoriteToggle(recipe)}
           />
         ) : (
           <FaRegHeart

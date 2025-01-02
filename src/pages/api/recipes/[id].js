@@ -1,6 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '../../../../prisma/prisma'
 
-const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   const { id } = req.query;
@@ -43,23 +42,23 @@ export default async function handler(req, res) {
   }
 
   // Handle the "DELETE" request to remove from favorites
-  else if (req.method === 'DELETE') {
-    try {
-      const updatedRecipe = await prisma.recipe.update({
-        where: { id: Number(id) },
-        data: {
-          isFavorite: false, // Remove the recipe from favorites
-        },
-      });
+  // else if (req.method === 'DELETE') {
+  //   try {
+  //     const updatedRecipe = await prisma.recipe.update({
+  //       where: { id: Number(id) },
+  //       data: {
+  //         isFavorite: false, // Remove the recipe from favorites
+  //       },
+  //     });
 
-      res.status(200).json(updatedRecipe);
-    } catch (error) {
-      console.error('Error removing from favorites:', error);
-      res.status(500).json({ error: 'Failed to update favorite status' });
-    } finally {
-      await prisma.$disconnect();
-    }
-  }
+  //     res.status(200).json(updatedRecipe);
+  //   } catch (error) {
+  //     console.error('Error removing from favorites:', error);
+  //     res.status(500).json({ error: 'Failed to update favorite status' });
+  //   } finally {
+  //     await prisma.$disconnect();
+  //   }
+  // }
 
   else if (req.method === 'PUT') {
     const { title, ingredients, instructions, notes } = req.body;
