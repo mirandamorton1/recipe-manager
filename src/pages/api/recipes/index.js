@@ -1,3 +1,4 @@
+import logger from '@/utils/logger';
 import prisma from '../../../../prisma/prisma'
 
 
@@ -5,7 +6,7 @@ const handler = async (req, res) => {
   const { method } = req;
   const { id } = req.query; 
 
-  console.log('Received user ID:', id); 
+  logger.info('Received user ID:', id);
 
   if (method === 'GET') {
     if (!id) {
@@ -19,7 +20,7 @@ const handler = async (req, res) => {
 
       return res.status(200).json(recipes); 
     } catch (error) {
-      console.error('Error fetching recipes:', error);
+      logger.error('Error fetching recipes:', error);
       return res.status(500).json({ error: 'Failed to fetch recipes' });
     } finally {
       await prisma.$disconnect();
@@ -48,7 +49,7 @@ const handler = async (req, res) => {
 
       return res.status(201).json(newRecipe);
     } catch (error) {
-      console.error('Error creating recipe:', error);
+      logger.error('Error creating recipe:', error);
       return res.status(500).json({ error: 'Failed to create recipe' });
     } finally {
       await prisma.$disconnect();

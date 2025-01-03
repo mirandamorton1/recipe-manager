@@ -1,16 +1,15 @@
-import styles from '../styles/Modal.module.scss';
+import styles from "../styles/Modal.module.scss";
 
 const ConfirmationModal = ({ onConfirm, onCancel, recipe }) => {
-    return (
-      <div className={styles.modal}>
-        <div className={styles.modalContent}>
-          <h3>Are you sure you want to delete &quot;{recipe?.title}&quot;?</h3>
-          <button onClick={onConfirm}>Yes</button>
-          <button onClick={onCancel}>No</button>
-        </div>
+  return (
+    <div className={styles.modal}>
+      <div className={styles.modalContent}>
+        <h3>Are you sure you want to delete &quot;{recipe?.title}&quot;?</h3>
+        <button onClick={onConfirm}>Yes</button>
+        <button onClick={onCancel}>No</button>
       </div>
-    );
-  };
-  
-  export default ConfirmationModal;
-  
+    </div>
+  );
+};
+
+export default ConfirmationModal;

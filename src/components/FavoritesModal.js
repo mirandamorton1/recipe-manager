@@ -5,11 +5,11 @@ const FavoritesModal = ({ favorites, close }) => {
     return (
       <div>
         <h2>My Favorites</h2>
-        {favorites.length > 0 ? (
+        {favorites?.length > 0 ? (
           <ul>
-            {favorites.map((recipe) => (
-              <li key={recipe.id}>
-                {recipe.title}
+            {favorites.map((fav) => (
+              <li key={fav.id}>
+                {fav.title}
               </li>
             ))}
           </ul>

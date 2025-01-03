@@ -3,6 +3,11 @@ import { useRouter } from "next/router";
 import RecipeCard from "@/components/RecipeCard";
 import Sidebar from "@/components/Sidebar";
 import ConfirmationModal from "../components/ConfirmationModal";
+import IngredientsModal from "../components/IngredientsModal";
+import InstructionsModal from "../components/InstructionsModal";
+import NotesModal from "../components/NotesModal";
+import FavoritesModal from "../components/FavoritesModal";
+import LocationModal from "../components/LocationModal";
 import styles from "../styles/Dashboard.module.scss";
 import { FiMenu } from "react-icons/fi";
 
@@ -15,8 +20,12 @@ const Dashboard = () => {
   const [favorites, setFavorites] = useState([]);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [recipeToDelete, setRecipeToDelete] = useState(null);
-  const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
-  const [currentRecipe, setCurrentRecipe] = useState(null); 
+  const [showIngredientsModal, setShowIngredientsModal] = useState(false);
+  const [showInstructionsModal, setShowInstructionsModal] = useState(false);
+  const [showNotesModal, setShowNotesModal] = useState(false);
+  const [showFavoritesModal, setShowFavoritesModal] = useState(false);
+  const [showLocationModal, setShowLocationModal] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
   const router = useRouter();
 
   const addRecipe = (newRecipe) => {
@@ -34,9 +43,8 @@ const Dashboard = () => {
       const res = await fetch(`/api/recipes/${recipeToDelete.id}`, {
         method: "DELETE",
       });
-  
+
       if (res.ok) {
-        // Update the local state to remove the deleted recipe
         setRecipes((prevRecipes) =>
           prevRecipes.filter((recipe) => recipe.id !== recipeToDelete.id)
         );
@@ -49,7 +57,6 @@ const Dashboard = () => {
     }
     setIsConfirmationModalOpen(false);
   };
-  
 
   const handleDeleteCancel = () => {
     setIsConfirmationModalOpen(false);
@@ -60,27 +67,51 @@ const Dashboard = () => {
   };
 
   const handleFavoriteToggle = async (recipe) => {
-    const isFavorited = favorites.some((fav) => fav.id === recipe.id);
+    const updatedFields = { isFavorite: !recipe.isFavorite };
 
     const res = await fetch(`/api/recipes/${recipe.id}`, {
-      method: isFavorited ? "DELETE" : "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(updatedFields),
     });
 
     if (res.ok) {
       const updatedRecipe = await res.json();
-      if (isFavorited) {
-        setFavorites(favorites.filter((fav) => fav.id !== recipe.id));
-      } else {
-        setFavorites([...favorites, updatedRecipe]);
-      }
+      setRecipes((prevRecipes) =>
+        prevRecipes.map((r) => (r.id === recipe.id ? updatedRecipe : r))
+      );
     } else {
-      console.error("Failed to update favorite status");
+      console.error("Failed to toggle favorite");
     }
   };
-  
+
+  const handleEditRecipe = async (recipeId, updatedFields) => {
+    const res = await fetch(`/api/recipes/${recipeId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedFields), 
+    });
+
+    if (res.ok) {
+      const updatedRecipe = await res.json();
+      setRecipes((prevRecipes) =>
+        prevRecipes.map((recipe) =>
+          recipe.id === recipeId ? updatedRecipe : recipe
+        )
+      );
+    } else {
+      console.error("Failed to update recipe");
+    }
+  };
+
+  useEffect(() => {
+    const favoriteRecipes = recipes.filter((recipe) => recipe.isFavorite);
+    setFavorites(favoriteRecipes);
+  }, [recipes]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -160,6 +191,7 @@ const Dashboard = () => {
         recipes={recipes}
         addRecipe={addRecipe}
         setUser={setUser}
+        setShowFavoritesModal={setShowFavoritesModal}
       />
 
       <div className={styles.content}>
@@ -170,6 +202,12 @@ const Dashboard = () => {
             favorites={favorites}
             handleFavoriteToggle={handleFavoriteToggle}
             handleDeleteClick={handleDeleteClick}
+            handleEditRecipe={handleEditRecipe}
+            setShowIngredientsModal={setShowIngredientsModal}
+            setShowInstructionsModal={setShowInstructionsModal}
+            setShowLocationModal={setShowLocationModal}
+            setShowNotesModal={setShowNotesModal}
+            setSelectedRecipe={setSelectedRecipe}
           />
         ))}
       </div>
@@ -179,6 +217,44 @@ const Dashboard = () => {
           onConfirm={handleDeleteConfirm}
           onCancel={handleDeleteCancel}
           recipe={recipeToDelete}
+          isConfirmationModalOpen={isConfirmationModalOpen}
+        />
+      )}
+
+      {showIngredientsModal && (
+        <IngredientsModal
+          recipe={selectedRecipe}
+          closeModal={() => setShowIngredientsModal(false)}
+          handleEditRecipe={handleEditRecipe}
+        />
+      )}
+
+      {showInstructionsModal && (
+        <InstructionsModal
+          recipe={selectedRecipe}
+          closeModal={() => setShowInstructionsModal(false)}
+          handleEditRecipe={handleEditRecipe}
+        />
+      )}
+      {showNotesModal && (
+        <NotesModal
+          recipe={selectedRecipe}
+          closeModal={() => setShowNotesModal(false)}
+          handleEditRecipe={handleEditRecipe}
+        />
+      )}
+      {showLocationModal && (
+        <LocationModal
+          recipe={selectedRecipe}
+          closeModal={() => setShowLocationModal(false)}
+          handleEditRecipe={handleEditRecipe}
+        />
+      )}
+      {showFavoritesModal && (
+        <FavoritesModal
+          recipe={selectedRecipe}
+          closeModal={() => setShowFavoritesModal(false)}
+          handleEditRecipe={handleEditRecipe}
         />
       )}
     </div>

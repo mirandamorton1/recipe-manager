@@ -1,3 +1,4 @@
+import logger from "@/utils/logger";
 import prisma from "../../../../prisma/prisma";
 import authorize from '../../../middleware/authorize';
 
@@ -11,7 +12,7 @@ const meHandler = async (req, res) => {
       });
 
       if (user) {
-        console.log('Fetched user data:', user);
+        logger.info('Fetched user data:', user);
 
         return res.status(200).json({
           userId: user.id,
@@ -22,7 +23,7 @@ const meHandler = async (req, res) => {
         return res.status(404).json({ message: 'User not found' });
       }
     } catch (error) {
-      console.error('Error fetching user:', error);
+      logger.error('Error fetching user:', error);
       return res.status(500).json({ message: 'Server error' });
     }
   } else {

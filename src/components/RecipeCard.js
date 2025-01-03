@@ -1,23 +1,40 @@
 import React, { useState } from "react";
 import styles from "../styles/RecipeCard.module.scss";
 import { FaHeart, FaRegHeart, FaMapMarkerAlt, FaTrash } from "react-icons/fa";
-import IngredientsModal from "./FavoritesModal";
-import InstructionsModal from "./InstructionsModal";
-import NotesModal from "./NotesModal";
-import LocationModal from "./LocationModal";
 
 const RecipeCard = ({
   recipe,
   handleFavoriteToggle,
   favorites,
   handleDeleteClick,
+  setShowIngredientsModal,
+  setShowInstructionsModal,
+  setShowNotesModal,
+  setShowLocationModal,
+  setSelectedRecipe,
 }) => {
-  const [showIngredientsModal, setShowIngredientsModal] = useState(false);
-  const [showInstructionsModal, setShowInstructionsModal] = useState(false);
-  const [showNotesModal, setShowNotesModal] = useState(false);
-  const [showLocationModal, setShowLocationModal] = useState(false);
 
   const isFavorited = favorites.some((fav) => fav.id === recipe.id);
+
+  const openIngredientsModal = () => {
+    setSelectedRecipe(recipe);
+    setShowIngredientsModal(true);
+  };
+
+  const openInstructionsModal = () => {
+    setSelectedRecipe(recipe);
+    setShowInstructionsModal(true);
+  };
+
+  const openNotesModal = () => {
+    setSelectedRecipe(recipe);
+    setShowNotesModal(true);
+  };
+
+  const openLocationModal = () => {
+    setSelectedRecipe(recipe);
+    setShowLocationModal(true);
+  }
 
   return (
     <div className={styles.card}>
@@ -33,25 +50,25 @@ const RecipeCard = ({
       <div className={styles.actions}>
         <button
           className={styles.linkButton}
-          onClick={() => setShowIngredientsModal(true)}
+          onClick={openIngredientsModal}
         >
           Ingredients
         </button>
         <button
           className={styles.linkButton}
-          onClick={() => setShowInstructionsModal(true)}
+          onClick={openInstructionsModal}
         >
           Instructions
         </button>
         <button
           className={styles.linkButton}
-          onClick={() => setShowNotesModal(true)}
+          onClick={openNotesModal}
         >
           Notes
         </button>
         <FaMapMarkerAlt
           className={styles.icon}
-          onClick={() => setShowLocationModal(true)}
+          onClick={openLocationModal}
         />
         {isFavorited ? (
           <FaHeart
@@ -65,35 +82,6 @@ const RecipeCard = ({
           />
         )}
       </div>
-
-      {/* Ingredients Modal */}
-      {showIngredientsModal && (
-        <IngredientsModal
-          recipe={recipe}
-          closeModal={() => setShowIngredientsModal(false)}
-        />
-      )}
-
-      {showInstructionsModal && (
-        <InstructionsModal
-          recipe={recipe}
-          closeModal={() => setShowInstructionsModal(false)}
-        />
-      )}
-
-      {showNotesModal && (
-        <NotesModal
-          recipe={recipe}
-          closeModal={() => setShowNotesModal(false)}
-        />
-      )}
-
-      {showLocationModal && (
-        <LocationModal
-          recipe={recipe}
-          closeModal={() => setShowLocationModal(false)}
-        />
-      )}
     </div>
   );
 };
