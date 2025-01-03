@@ -1,0 +1,79 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 0 5%;
+    background-color: #f8f8f8; 
+  }
+  
+  .left, .center, .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .left {
+    align-items: flex-start; 
+  }
+  
+  .left h1 {
+    font-size: 3rem;
+    margin: 0;
+    color: #333;
+  }
+  
+  .left p {
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .center {
+    justify-content: center; 
+  }
+
+  .recipeImage {
+    max-width: 300px;  
+    height: auto;
+  }
+  
+  .right {
+    align-items: flex-end; 
+  }
+  
+  .buttonGroup {
+    display: flex; 
+    flex-direction: column;
+    align-items: flex-end; 
+  }
+
+  .buttonsWrapper {
+    display: flex; 
+    gap: 1rem; 
+    margin-top: 0.5rem; 
+  }
+  
+  .buttonGroup p {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .button {
+    margin-top: 0.5rem;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    color: white;
+    background-color: #0073e6; 
+    border: none;
+    text-decoration: none; 
+    border-radius: 25px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #005bb5;
+  }
+  
+//   <a href='https://pngtree.com/freepng/egg-noodle-noodles-food-illustration_4588745.html'>png image from pngtree.com/</a>
