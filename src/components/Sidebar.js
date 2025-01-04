@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { FaTimes, FaUserCircle, FaRegHeart, FaPlus, FaSignOutAlt } from 'react-icons/fa';
 import styles from "../styles/Sidebar.module.scss";
 import ProfileModal from "../components/ProfileModal";
 import FavoritesModal from "../components/FavoritesModal";
@@ -34,15 +35,15 @@ const Sidebar = ({
   if (!isOpen) return null;
 
   return (
-    <div className={styles.sidebar}>
+    <div className={`${styles.sidebar} ${isOpen ? '' : styles.closed}`}>
       <button className={styles.closeButton} onClick={toggleSidebar}>
-        Close
+        <FaTimes />
       </button>
       <ul className={styles.sidebarMenu}>
-        <li onClick={openProfileModal}>Profile</li>
-        <li onClick={openFavoritesModal}>My Favorites</li>
-        <li onClick={openNewRecipeModal}>New Recipe</li>
-        <li onClick={handleLogout}>Logout</li>
+        <li onClick={openProfileModal}><FaUserCircle />Profile</li>
+        <li onClick={openFavoritesModal}><FaRegHeart />My Favorites</li>
+        <li onClick={openNewRecipeModal}><FaPlus />New Recipe</li>
+        <li onClick={handleLogout}><FaSignOutAlt />Logout</li>
       </ul>
 
       {isProfileModalOpen && (
