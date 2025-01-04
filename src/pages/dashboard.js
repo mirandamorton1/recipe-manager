@@ -179,7 +179,8 @@ const Dashboard = () => {
         <button className={styles.menuButton} onClick={toggleSidebar}>
           <FiMenu size={24} />
         </button>
-        <h1>Welcome, {user.name}</h1>
+        <h1>{user.name}&apos;s Recipe Box
+        </h1>
       </div>
 
       <Sidebar
@@ -194,8 +195,15 @@ const Dashboard = () => {
         setShowFavoritesModal={setShowFavoritesModal}
       />
 
-      <div className={styles.content}>
-        {recipes.map((recipe) => (
+<div className={styles.content}>
+      {recipes.length === 0 ? (
+        <div className={styles.noRecipesWrapper}>
+        <p className={styles.noRecipesMessage}>
+          You have no recipes! Add a new recipe to get started.
+        </p>
+      </div>
+      ) : (
+        recipes.map((recipe) => (
           <RecipeCard
             key={recipe.id}
             recipe={recipe}
@@ -209,8 +217,9 @@ const Dashboard = () => {
             setShowNotesModal={setShowNotesModal}
             setSelectedRecipe={setSelectedRecipe}
           />
-        ))}
-      </div>
+        ))
+      )}
+    </div>
 
       {isConfirmationModalOpen && (
         <ConfirmationModal

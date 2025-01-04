@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "../styles/RecipeCard.module.scss";
 import { FaHeart, FaRegHeart, FaMapMarkerAlt, FaTrash } from "react-icons/fa";
 
@@ -38,10 +38,10 @@ const RecipeCard = ({
 
   return (
     <div className={styles.card}>
-      <div>
+      <div className={styles.titleContainer}>
         <h2 className={styles.title}>{recipe.title}</h2>
         <FaTrash
-          style={{ cursor: "pointer" }}
+          className={styles.deleteIcon}
           onClick={() => handleDeleteClick(recipe)}
         />
       </div>
@@ -77,7 +77,7 @@ const RecipeCard = ({
           />
         ) : (
           <FaRegHeart
-            style={{ cursor: "pointer", color: "black" }}
+            style={{ cursor: "pointer", color: "red" }}
             onClick={() => handleFavoriteToggle(recipe)}
           />
         )}

@@ -1,15 +1,29 @@
 .card {
-    border: 1px solid #1b1717;
+    border: 1px solid #d0cec5;
+    background-color: #dad7cd;
     border-radius: 8px;
     padding: 16px;
     margin: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 400px;
   }
+
+  .titleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   
   .title {
     font-size: 1.5rem;
     margin-bottom: 8px;
+    color: #344e41;
+  }
+
+  .deleteIcon {
+    cursor: pointer;
+    color: black;
+    font-size: 1rem;
   }
   
   .type {
@@ -27,13 +41,13 @@
   .linkButton {
     background: none;
     border: none;
-    color: #007bff;
-    text-decoration: underline;
+    color: #3a5a40;
+    text-decoration: none;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 1rem;
   
     &:hover {
-      color: #0056b3;
+      text-decoration: underline;
     }
   }
   
