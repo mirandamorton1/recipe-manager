@@ -1,47 +1,57 @@
-import React, { useState } from 'react';
-import styles from '../styles/Modal.module.scss';
+import React, { useState } from "react";
+import styles from "../styles/Modal.module.scss";
+import { FaRegEdit, FaTimes } from "react-icons/fa";
 
 const InstructionsModal = ({ recipe, closeModal, handleEditRecipe }) => {
   const [instructions, setInstructions] = useState(recipe.instructions);
-  const [isEditing, setIsEditing] = useState(false); 
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleSave = async () => {
-    await handleEditRecipe(recipe.id, { instructions }); 
-    setIsEditing(false); 
-    closeModal(); 
+    await handleEditRecipe(recipe.id, { instructions });
+    setIsEditing(false);
+    closeModal();
   };
 
   return (
     <div className={styles.modal}>
       <div className={styles.modalContent}>
-        <h3>Instructions</h3>
+        <div className={styles.modalHeader}>
+          <h3>Instructions</h3>
+          <button className={styles.closeButton} onClick={closeModal}>
+            <FaTimes size={20} />
+          </button>
+        </div>
 
         {!isEditing ? (
           <div>
             <p>{instructions}</p>
             <button
               className={styles.editButton}
-              onClick={() => setIsEditing(true)} 
+              onClick={() => setIsEditing(true)}
             >
-              Edit
+              <FaRegEdit size={20} />
             </button>
           </div>
         ) : (
           <div>
             <textarea
-              value={instructions} 
-              onChange={(e) => setInstructions(e.target.value)} 
+              value={instructions}
+              onChange={(e) => setInstructions(e.target.value)}
               className={styles.textArea}
             />
-            <button className={styles.saveButton} onClick={handleSave}>
-              Save
-            </button>
+            <div className={styles.buttonGroup}>
+              <button className={styles.saveButton} onClick={handleSave}>
+                Save
+              </button>
+              <button
+                className={styles.cancelButton}
+                onClick={() => setIsEditing(false)}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         )}
-
-        <button className={styles.closeButton} onClick={closeModal}>
-          Close
-        </button>
       </div>
     </div>
   );

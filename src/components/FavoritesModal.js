@@ -1,10 +1,17 @@
 import React from 'react';
+import ReactDOM from "react-dom";
 import styles from '../styles/Modal.module.scss';
+import { FaTimes } from "react-icons/fa";
 
 const FavoritesModal = ({ favorites, close }) => {
-    return (
-      <div>
-        <h2>My Favorites</h2>
+    return ReactDOM.createPortal(
+      <div className={styles.modal}>
+        <div className={styles.modalHeader}>
+          <h3>My Favorites</h3>
+          <button className={styles.closeButton} onClick={close}>
+            <FaTimes size={20} />
+          </button>
+        </div>
         {favorites?.length > 0 ? (
           <ul>
             {favorites.map((fav) => (
@@ -16,8 +23,8 @@ const FavoritesModal = ({ favorites, close }) => {
         ) : (
           <p>No favorites yet.</p>
         )}
-        <button onClick={close}>Close</button>
-      </div>
+      </div>,
+      document.body
     );
   };
 

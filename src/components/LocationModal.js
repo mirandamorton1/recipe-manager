@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../styles/Modal.module.scss';
+import { FaRegEdit, FaTimes } from "react-icons/fa";
 
 const LocationModal = ({ recipe, closeModal, handleEditRecipe }) => {
   const [location, setLocation] = useState(recipe.location);
@@ -14,7 +15,12 @@ const LocationModal = ({ recipe, closeModal, handleEditRecipe }) => {
   return (
     <div className={styles.modal}>
       <div className={styles.modalContent}>
-        <h3>Location</h3>
+      <div className={styles.modalHeader}>
+          <h3>Location</h3>
+          <button className={styles.closeButton} onClick={closeModal}>
+            <FaTimes size={20} />
+          </button>
+        </div>
 
         {!isEditing ? (
           <div>
@@ -23,7 +29,7 @@ const LocationModal = ({ recipe, closeModal, handleEditRecipe }) => {
               className={styles.editButton}
               onClick={() => setIsEditing(true)} 
             >
-              Edit
+              <FaRegEdit size={20} />
             </button>
           </div>
         ) : (
@@ -33,15 +39,21 @@ const LocationModal = ({ recipe, closeModal, handleEditRecipe }) => {
               onChange={(e) => setLocation(e.target.value)} 
               className={styles.textArea}
             />
-            <button className={styles.saveButton} onClick={handleSave}>
-              Save
-            </button>
+            <div className={styles.buttonGroup}>
+              <button className={styles.saveButton} onClick={handleSave}>
+                Save
+              </button>
+              <button
+                className={styles.cancelButton}
+                onClick={() => setIsEditing(false)}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         )}
 
-        <button className={styles.closeButton} onClick={closeModal}>
-          Close
-        </button>
+        
       </div>
     </div>
   );

@@ -1,27 +1,132 @@
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #efede6; 
+  border: 1px solid #433a3a;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  z-index: 1000;
+  width: 90%;
+  max-width: 500px;
+  overflow-y: auto;
+  max-height: 90%;
+}
 
-    button {
-        margin-top: 20px;
-      }
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #433a3a;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.editButton {
+  border: none;
+}
+
+.saveButton, .cancelButton {
+  background: transparent;
+  color: #3a5a40;
+  border: solid 1px #3a5a40;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.buttonGroup {
+  display: flex;
+  padding-top: 10px;
+  gap: 15px;
+}
+
+.editButton:hover {
+  cursor: pointer;
+}
+
+.textArea {
+  font-family: Arial, sans-serif;
+  font-size: medium;
+  width: 95%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.textArea textarea:focus {
+  border-color: #3a5a40; 
+  outline: none; 
+}
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; 
+}
+
+.inputLabel {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputLabel input {
+  font-size: .9rem; 
+  padding: 7px; 
+  height: 40px; 
+  border: 1px solid #ccc;
+  border-radius: 4px; 
+  box-sizing: border-box; 
+}
+
+
+.inputLabel input:focus {
+  border-color: #3a5a40; 
+  outline: none; 
+}
+
+.newRecipeForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 400px;
+  width: 100%;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+
+.newRecipeForm input {
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%; 
+}
+
+.newRecipeForm input:focus {
+    outline: none;
+    border: 2px solid #84a970; 
   }
-  
-  .modalContent {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px;
-    max-height: 80%;
-    overflow-y: auto;
+
+.newRecipeForm textarea:focus {
+    border-color: #3a5a40; 
+    outline: none; 
   }
-  
-  
