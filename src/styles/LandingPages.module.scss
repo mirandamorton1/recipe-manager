@@ -4,7 +4,12 @@
     align-items: center;
     height: 100vh;
     padding: 0 5%;
-    background-color: #f8f8f8; 
+    
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        
   }
   
   .left, .center, .right {
@@ -12,6 +17,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+
+    @media (max-width: 768px) {
+        flex: none; 
+        width: 100%; 
+        margin-bottom: 1rem; 
+      }
   }
   
   .left {
@@ -21,20 +33,20 @@
   .left h1 {
     font-size: 3rem;
     margin: 0;
-    color: #333;
+    color: #344e41;
   }
   
   .left p {
     font-size: 1.2rem;
-    color: #666;
+    color: #3a5a40;
   }
   
   .center {
     justify-content: center; 
   }
 
-  .recipeImage {
-    max-width: 300px;  
+  .foodImage {
+    max-width: 400px;  
     height: auto;
   }
   
@@ -45,27 +57,28 @@
   .buttonGroup {
     display: flex; 
     flex-direction: column;
-    align-items: flex-end; 
+    align-items: center; 
   }
 
   .buttonsWrapper {
     display: flex; 
-    gap: 1rem; 
+    gap: 0.5rem; 
     margin-top: 0.5rem; 
   }
   
-  .buttonGroup p {
+  .label {
     margin: 0;
-    font-size: 1rem;
-    color: #333;
+    font-size: 2rem;
+    color: #344e41;
+    padding: 2rem;
   }
   
   .button {
     margin-top: 0.5rem;
     padding: 0.8rem 1.2rem;
-    font-size: 1rem;
+    font-size: 1.25rem;
     color: white;
-    background-color: #0073e6; 
+    background-color: #84a970; 
     border: none;
     text-decoration: none; 
     border-radius: 25px;
@@ -73,7 +86,7 @@
   }
   
   .button:hover {
-    background-color: #005bb5;
+    background-color: #588157;
   }
-  
+}
 //   <a href='https://pngtree.com/freepng/egg-noodle-noodles-food-illustration_4588745.html'>png image from pngtree.com/</a>

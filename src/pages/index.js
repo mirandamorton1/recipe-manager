@@ -18,7 +18,8 @@ const IndexPage = () => {
           className={styles.foodImage}
           width={400}
           height={400}
-        ></Image>
+          priority
+        />
       </div>
 
       <div className={styles.right}>
