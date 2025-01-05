@@ -13,7 +13,7 @@ const IndexPage = () => {
 
       <div className={styles.center}>
         <Image
-          src="/images/food.png"
+          src="/images/food.webp"
           alt="Food image"
           className={styles.foodImage}
           width={400}

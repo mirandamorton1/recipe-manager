@@ -18,6 +18,7 @@ const meHandler = async (req, res) => {
           userId: user.id,
           email: user.email,
           name: user.name, 
+          createdAt: user.createdAt,
         });
       } else {
         return res.status(404).json({ message: 'User not found' });

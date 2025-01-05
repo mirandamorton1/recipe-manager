@@ -1,43 +1,43 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import styles from "../styles/LoginSignup.module.scss";
-import { FiArrowLeft } from "react-icons/fi";
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import styles from '../styles/LoginSignup.module.scss';
+import { FiArrowLeft } from 'react-icons/fi';
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false); 
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setError('');
     setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        credentials: "include",
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
       });
 
       if (res.ok) {
-        console.log("Login successful");
-        router.push("/dashboard");
+        console.log('Login successful');
+        router.push('/dashboard');
       } else {
         const data = await res.json();
-        setError(data.message || "Invalid login credentials");
+        setError(data.message || 'Invalid login credentials');
       }
     } catch (err) {
-      setError("An error occurred. Please try again later.");
-      console.error("Login error:", err);
+      setError('An error occurred. Please try again later.');
+      console.error('Login error:', err);
     } finally {
-      setLoading(false);
+      setLoading(false); 
     }
   };
 
@@ -47,7 +47,7 @@ const Login = () => {
         <FiArrowLeft size={30} className={styles.backArrow} />
       </Link>
       <h1>Login</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit} className={styles.form}>
         <div>
           <label htmlFor="email">Email</label>
@@ -72,14 +72,14 @@ const Login = () => {
           />
         </div>
         <button type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
+          {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
       <div>
         <p className={styles.link}>
           Don&apos;t have an account?
           <Link href="/signup">
-            <p>Sign up here</p>
+            Sign up here
           </Link>
         </p>
       </div>

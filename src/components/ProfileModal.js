@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import styles from "../styles/Modal.module.scss";
 import { FaRegEdit, FaTimes } from "react-icons/fa";
 
-const ProfileModal = ({ user, close, updateUser }) => {
+const ProfileModal = ({ user, close, updateUser, modalContentRef }) => {
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [isEditing, setIsEditing] = useState(false);
@@ -36,8 +36,8 @@ const ProfileModal = ({ user, close, updateUser }) => {
   };
 
   return ReactDOM.createPortal(
-    <div className={styles.modal}>
-      <div className={styles.modalContent}>
+    <div className={styles.modal} >
+      <div className={styles.modalContent} ref={modalContentRef} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
           <h3>Profile</h3>
           <button className={styles.closeButton} onClick={close}>
@@ -49,6 +49,7 @@ const ProfileModal = ({ user, close, updateUser }) => {
           <div>
             <p>Name: {name}</p>
             <p>Email: {email}</p>
+            <p>Member Since: {new Date(user.createdAt).toLocaleDateString()}</p>
             <button
               className={styles.editButton}
               onClick={() => setIsEditing(true)}

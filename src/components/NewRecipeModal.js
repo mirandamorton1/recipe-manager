@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import styles from "../styles/Modal.module.scss";
 import { FaTimes } from "react-icons/fa";
 
-const NewRecipeModal = ({ userId, close, addRecipe, toggleSidebar }) => {
+const NewRecipeModal = ({ userId, close, addRecipe, toggleSidebar, modalContentRef }) => {
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
   const [ingredients, setIngredients] = useState("");
@@ -48,7 +48,7 @@ const NewRecipeModal = ({ userId, close, addRecipe, toggleSidebar }) => {
 
   return ReactDOM.createPortal(
     <div className={styles.modal}>
-      <div className={styles.modalContent}>
+      <div className={styles.modalContent} ref={modalContentRef} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
           <h3>New Recipe</h3>
           <button className={styles.closeButton} onClick={close}>
