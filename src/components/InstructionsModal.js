@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect, forwardRef } from "react";
 import styles from "../styles/Modal.module.scss";
 import { FaRegEdit, FaTimes } from "react-icons/fa";
 
-const InstructionsModal = ({ recipe, closeModal, handleEditRecipe }) => {
+const InstructionsModal = forwardRef(({ recipe, closeModal, handleEditRecipe }, ref) => {
   const [instructions, setInstructions] = useState(recipe.instructions);
   const [isEditing, setIsEditing] = useState(false);
+  const modalContentRef = useRef(null);
 
   const handleSave = async () => {
     await handleEditRecipe(recipe.id, { instructions });
@@ -12,9 +13,22 @@ const InstructionsModal = ({ recipe, closeModal, handleEditRecipe }) => {
     closeModal();
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalContentRef.current && !modalContentRef.current.contains(event.target)) {
+        closeModal();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [closeModal]);
+
   return (
-    <div className={styles.modal}>
-      <div className={styles.modalContent}>
+    <div className={styles.modal} ref={ref}>
+      <div className={styles.modalContent} ref={modalContentRef} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
           <h3>Instructions</h3>
           <button className={styles.closeButton} onClick={closeModal}>
@@ -55,6 +69,6 @@ const InstructionsModal = ({ recipe, closeModal, handleEditRecipe }) => {
       </div>
     </div>
   );
-};
+});
 
 export default InstructionsModal;

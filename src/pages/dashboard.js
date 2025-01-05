@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/router";
 import RecipeCard from "@/components/RecipeCard";
 import Sidebar from "@/components/Sidebar";
@@ -6,7 +6,6 @@ import ConfirmationModal from "../components/ConfirmationModal";
 import IngredientsModal from "../components/IngredientsModal";
 import InstructionsModal from "../components/InstructionsModal";
 import NotesModal from "../components/NotesModal";
-import FavoritesModal from "../components/FavoritesModal";
 import LocationModal from "../components/LocationModal";
 import styles from "../styles/Dashboard.module.scss";
 import { FiMenu } from "react-icons/fi";
@@ -27,6 +26,11 @@ const Dashboard = () => {
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const router = useRouter();
+
+  const ingredientsModalRef = useRef(null);
+  const instructionsModalRef = useRef(null);
+  const notesModalRef = useRef(null);
+  const locationModalRef = useRef(null);
 
   const addRecipe = (newRecipe) => {
     setRecipes((prevRecipes) => [...prevRecipes, newRecipe]);
@@ -172,6 +176,28 @@ const Dashboard = () => {
     }
   };
 
+  const handleClickOutside = useCallback((event) => {
+    if (
+      (ingredientsModalRef.current && ingredientsModalRef.current.contains(event.target)) ||
+      (instructionsModalRef.current && instructionsModalRef.current.contains(event.target)) ||
+      (notesModalRef.current && notesModalRef.current.contains(event.target)) ||
+      (locationModalRef.current && locationModalRef.current.contains(event.target))
+    ) {
+      return;
+    }
+    setShowIngredientsModal(false);
+    setShowInstructionsModal(false);
+    setShowNotesModal(false);
+    setShowLocationModal(false);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [handleClickOutside]);
+
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -235,6 +261,7 @@ const Dashboard = () => {
           recipe={selectedRecipe}
           closeModal={() => setShowIngredientsModal(false)}
           handleEditRecipe={handleEditRecipe}
+          ref={ingredientsModalRef}
         />
       )}
 
@@ -243,6 +270,7 @@ const Dashboard = () => {
           recipe={selectedRecipe}
           closeModal={() => setShowInstructionsModal(false)}
           handleEditRecipe={handleEditRecipe}
+          ref={instructionsModalRef}
         />
       )}
       {showNotesModal && (
@@ -250,6 +278,7 @@ const Dashboard = () => {
           recipe={selectedRecipe}
           closeModal={() => setShowNotesModal(false)}
           handleEditRecipe={handleEditRecipe}
+          ref={notesModalRef}
         />
       )}
       {showLocationModal && (
@@ -257,6 +286,7 @@ const Dashboard = () => {
           recipe={selectedRecipe}
           closeModal={() => setShowLocationModal(false)}
           handleEditRecipe={handleEditRecipe}
+          ref={locationModalRef}
         />
       )}
     </div>
