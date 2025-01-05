@@ -8,13 +8,24 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setError("");
+     // Password requirements
+     const passwordRequirements = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+     if (!passwordRequirements.test(password)) {
+       setError("Password must be at least 8 characters long and contain both letters and numbers.");
+       return;
+     }
+ 
+     if (password !== confirmPassword) {
+       setError("Passwords do not match.");
+       return;
+     }
 
     try {
       const res = await fetch("/api/auth/signup", {
@@ -68,6 +79,16 @@ const Signup = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <p>At least 8 characters long, contain numbers & letters</p>
+        </div>
+        <div>
+          <label>Confirm Password</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
         </div>

@@ -23,7 +23,7 @@ const Dashboard = () => {
   const [showIngredientsModal, setShowIngredientsModal] = useState(false);
   const [showInstructionsModal, setShowInstructionsModal] = useState(false);
   const [showNotesModal, setShowNotesModal] = useState(false);
-  const [showFavoritesModal, setShowFavoritesModal] = useState(false);
+  
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const router = useRouter();
@@ -139,6 +139,7 @@ const Dashboard = () => {
             if (recipesRes.ok) {
               const recipesData = await recipesRes.json();
               // console.log("Fetched recipes:", recipesData);
+              recipesData.sort((a, b) => a.id - b.id);
               setRecipes(recipesData);
             } else {
               throw new Error("Failed to fetch recipes");
@@ -192,7 +193,6 @@ const Dashboard = () => {
         recipes={recipes}
         addRecipe={addRecipe}
         setUser={setUser}
-        setShowFavoritesModal={setShowFavoritesModal}
       />
 
 <div className={styles.content}>
@@ -256,13 +256,6 @@ const Dashboard = () => {
         <LocationModal
           recipe={selectedRecipe}
           closeModal={() => setShowLocationModal(false)}
-          handleEditRecipe={handleEditRecipe}
-        />
-      )}
-      {showFavoritesModal && (
-        <FavoritesModal
-          recipe={selectedRecipe}
-          closeModal={() => setShowFavoritesModal(false)}
           handleEditRecipe={handleEditRecipe}
         />
       )}

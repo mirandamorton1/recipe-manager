@@ -39,12 +39,39 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+    position: relative;
+
     svg {
       margin-right: 10px;
     }
 
-    &:hover {
-      border-bottom: 1px solid #221d1d;
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background-color: #221d1d;
+      transform: scaleX(0);
+      transition: transform 0.2s ease;
+    }
+
+    &:hover::after {
+      transform: scaleX(1);
     }
   }
+}
+
+.modalContainer {
+  position: fixed; /* Keeps it positioned over the entire screen */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Optional overlay for dimming the background */
+  z-index: 1100; /* Ensures it is above other elements, including the sidebar */
 }

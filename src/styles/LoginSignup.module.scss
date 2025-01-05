@@ -4,22 +4,21 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  padding: 0 20px; 
-
+  padding: 0 20px;
 }
 
 .backArrow {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    cursor: pointer;
-    color:#3a5a40;
-  }
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  color: #3a5a40;
+}
 
 .container h1 {
-    font-size: 2rem;
-    color: #344e41;
-  }
+  font-size: 2rem;
+  color: #344e41;
+}
 
 .form {
   display: flex;
@@ -32,6 +31,7 @@
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .form h2 {
@@ -40,23 +40,32 @@
 }
 
 .form label {
-    display: block;
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  white-space: normal;
+}
 
 .form input {
   padding: 0.8rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 100%; 
+  width: 100%;
 }
 
 .form input:focus {
-    outline: none;
-    border: 2px solid #84a970; 
-  }
+  outline: none;
+  border: 2px solid #84a970;
+}
+
+.form div p {
+  position: absolute;
+  font-size: 0.85rem;
+  color: #6c757d; /* Neutral gray for hint text */
+  margin-top: 0.25rem;
+  left: 6rem;
+}
 
 .form button {
   padding: 0.8rem;
@@ -75,7 +84,7 @@
 
 .link {
   text-align: center;
-  margin-top: 2rem; 
+  margin-top: 2rem;
   font-size: 1.25rem;
 }
 
