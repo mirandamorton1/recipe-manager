@@ -33,19 +33,21 @@ Then visit http://localhost:3000 in your browser.
 Please **check the box** for each one that you implement to help us know what to look out for.
 
 ### :white_check_mark: Bare minimum:
-- [ ] Sign up a new user
-- [ ] Login an existing user
-- [ ] Logout a user
+- [x] Sign up a new user
+- [x] Login an existing user
+       (Login with sara@mail.com passsword: myrecipes1)
+- [x] Logout a user
 
 ### :heart_eyes: Bonus points:
-- [ ] Use a Postgres database
-- [ ] Auto-login after signup
-- [ ] Allow user profile updates
-- [ ] Authorize pages and API endpoints
-- [ ] Add request logging
-- [ ] Clean PII from logs
-- [ ] Make it look pretty with SCSS modules
-- [ ] Add an admin page to manage users
+- [x] Use a Postgres database
+- [x] Auto-login after signup
+- [x] Allow user profile updates
+- [x] Authorize pages and API endpoints
+- [x] Add request logging
+- [x] Clean PII from logs
+- [x] Make it look pretty with SCSS modules
+- [x] Add an admin page to manage users
+      (Go to localhost:3000/admin to login with: admin1@mail.com password: secure_password)
 - [ ] Enforce 2FA *
 
 \* **Note:** Multiple 2FA strategies exist.  If you choose to implement one that "sends" a code by email or text, you can emulate that by logging the code to your local terminal.  _(No need to pay real :dollar: to complete this challenge. :sweat_smile:)_
