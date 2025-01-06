@@ -73,4 +73,6 @@ const LocationModal = forwardRef(({ recipe, closeModal, handleEditRecipe }, ref)
   );
 });
 
+LocationModal.displayName = 'LocationModal';
+
 export default LocationModal;

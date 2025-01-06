@@ -71,4 +71,6 @@ const NotesModal = forwardRef(({ recipe, closeModal, handleEditRecipe }, ref) =>
   );
 });
 
+NotesModal.displayName = "NotesModal";
+
 export default NotesModal;

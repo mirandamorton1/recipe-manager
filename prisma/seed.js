@@ -3,7 +3,6 @@ import crypto from 'crypto';
 
 const prisma = new PrismaClient();
 
-// Hashing function using 'createHmac' (same as your signup logic)
 const hashPassword = (password, salt) => {
   return crypto.createHmac('sha256', salt)
     .update(password)
@@ -11,33 +10,24 @@ const hashPassword = (password, salt) => {
 };
 
 async function main() {
-  const salt = crypto.randomBytes(16).toString('hex'); // Generate a new salt for seeding
-  const hashedPassword = hashPassword("secure_password", salt); // Hash with 'createHmac'
+  const salt = crypto.randomBytes(16).toString('hex'); 
+  const hashedPassword = hashPassword("secure_password", salt); 
 
-  const user = await prisma.user.create({
+  const adminUser = await prisma.user.create({
     data: {
-      name: "Janet Doe",
-      email: "janet.doe@example.com",
+      name: "Admin User",
+      email: "admin1@mail.com",
       password: hashedPassword,
       salt: salt,
+      role: 'ADMIN', 
+      isActive: true,
       recipes: {
-        create: [
-          {
-            title: "Tacos",
-            type: "Beef",
-            ingredients: ["Spice packet", "Ground Beef", "Tomato Sauce"],
-            instructions: ["Cook meat", "Mix together"],
-            notes: "Family favorite!",
-            location: "Grandma's Cookbook, Page 50",
-            photo: "https://example.com/taco.jpg",
-            isFavorite: true,
-          },
-        ],
+        create: [], 
       },
     },
   });
 
-  console.log({ user });
+  console.log({ adminUser });
 }
 
 main()

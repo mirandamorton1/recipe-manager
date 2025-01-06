@@ -71,4 +71,6 @@ const InstructionsModal = forwardRef(({ recipe, closeModal, handleEditRecipe }, 
   );
 });
 
+InstructionsModal.displayName = "InstructionsModal";
+
 export default InstructionsModal;

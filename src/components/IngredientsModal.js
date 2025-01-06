@@ -71,4 +71,6 @@ const IngredientsModal = forwardRef(({ recipe, closeModal, handleEditRecipe }, r
   );
 });
 
+IngredientsModal.displayName = "IngredientsModal";
+
 export default IngredientsModal;

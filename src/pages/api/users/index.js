@@ -1,7 +1,18 @@
 import prisma from "../../../../prisma/prisma";
+import logger from "@/utils/logger";
 
 const handler = async (req, res) => {
-  if (req.method === "PUT") {
+  if (req.method === "GET") {
+    try {
+      const users = await prisma.user.findMany({
+        select: { id: true, name: true, email: true, createdAt: true, isActive: true },
+      });
+      return res.status(200).json(users);
+    } catch (error) {
+      logger.error(error);
+      return res.status(500).json({ error: "Failed to fetch users" });
+    }
+  } else if (req.method === "PUT") {
     const { id, name, email } = req.body;
 
     if (!id || !name || !email) {
@@ -16,7 +27,7 @@ const handler = async (req, res) => {
 
       return res.status(200).json(updatedUser);
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       return res.status(500).json({ error: "Failed to update user" });
     }
   } else {

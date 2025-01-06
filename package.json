@@ -5,6 +5,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "next dev",
+    "seed": "node prisma/seed.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

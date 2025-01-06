@@ -32,7 +32,7 @@ export default async function handler(req, res) {
 
       res.status(200).json(updatedRecipe);
     } catch (error) {
-      console.error("Error adding to favorites:", error);
+      logger.error("Error adding to favorites:", error);
       res.status(500).json({ error: "Failed to update favorite status" });
     } finally {
       await prisma.$disconnect();

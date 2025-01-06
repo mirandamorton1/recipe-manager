@@ -45,6 +45,12 @@ const loginHandler = async (req, res) => {
       // logger.info(`[INFO] Stored password hash: ${user.password}`);
       // logger.info(`[INFO] Stored salt: ${user.salt}`);
 
+      if (!user.isActive) {
+        return res
+          .status(403)
+          .json({ error: "Your account is inactive. Please contact support." });
+      }
+
       const isPasswordValid = verifyPassword(
         user.password,
         user.salt,
@@ -76,7 +82,7 @@ const loginHandler = async (req, res) => {
       );
 
       logger.info(`Login successful for user: ${sanitizedEmail} (${sanitizedName})`);
-      return res.status(200).json({ message: "Login successful" });
+      return res.status(200).json({ token, user: { id: user.id, role: user.role } });
     } catch (error) {
       logger.error(`[ERROR] Login handler error:", ${error.message}`);
       return res.status(500).json({ message: "Something went wrong" });
