@@ -27,6 +27,7 @@ const Dashboard = () => {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const router = useRouter();
 
+  const sidebarRef = useRef(null);
   const ingredientsModalRef = useRef(null);
   const instructionsModalRef = useRef(null);
   const notesModalRef = useRef(null);
@@ -178,6 +179,7 @@ const Dashboard = () => {
 
   const handleClickOutside = useCallback((event) => {
     if (
+      (sidebarRef.current && sidebarRef.current.contains(event.target)) ||
       (ingredientsModalRef.current && ingredientsModalRef.current.contains(event.target)) ||
       (instructionsModalRef.current && instructionsModalRef.current.contains(event.target)) ||
       (notesModalRef.current && notesModalRef.current.contains(event.target)) ||
@@ -189,6 +191,8 @@ const Dashboard = () => {
     setShowInstructionsModal(false);
     setShowNotesModal(false);
     setShowLocationModal(false);
+
+    setIsSidebarOpen(false);
   }, []);
 
   useEffect(() => {
@@ -219,6 +223,7 @@ const Dashboard = () => {
         recipes={recipes}
         addRecipe={addRecipe}
         setUser={setUser}
+        ref={sidebarRef}
       />
 
 <div className={styles.content}>

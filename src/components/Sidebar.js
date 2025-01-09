@@ -1,18 +1,18 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback, forwardRef } from "react";
 import { FaTimes, FaUserCircle, FaRegHeart, FaPlus, FaSignOutAlt } from "react-icons/fa";
 import styles from "../styles/Sidebar.module.scss";
 import ProfileModal from "../components/ProfileModal";
 import FavoritesModal from "../components/FavoritesModal";
 import NewRecipeModal from "../components/NewRecipeModal";
 
-const Sidebar = ({
+const Sidebar = React.forwardRef(({
   isOpen,
   toggleSidebar,
   logout,
   user,
   favorites,
   addRecipe,
-}) => {
+}, ref) => {
   const [isProfileModalOpen, setProfileModalOpen] = useState(false);
   const [isFavoritesModalOpen, setFavoritesModalOpen] = useState(false);
   const [isNewRecipeModalOpen, setNewRecipeModalOpen] = useState(false);
@@ -59,7 +59,7 @@ const Sidebar = ({
   if (!isOpen) return null;
 
   return (
-    <div ref={sidebarRef} className={`${styles.sidebar} ${isOpen ? "" : styles.closed}`}>
+    <div ref={ref} className={`${styles.sidebar} ${isOpen ? "" : styles.closed}`}>
       <button className={styles.closeButton} onClick={toggleSidebar}>
         <FaTimes />
       </button>
@@ -105,6 +105,8 @@ const Sidebar = ({
       )}
     </div>
   );
-};
+});
+
+Sidebar.displayName = "Sidebar";
 
 export default Sidebar;
