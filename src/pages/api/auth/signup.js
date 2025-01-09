@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import logger from '../../../utils/logger'
+import speakeasy from 'speakeasy';
 
 dotenv.config();
 
@@ -33,16 +34,27 @@ const signupHandler = async (req, res) => {
 
       // logger.info('Password hashed successfully:', hashedPassword);
 
+    const secret = speakeasy.generateSecret({ length: 20 });
+
       const user = await prisma.user.create({
         data: {
           name,
           email,
           password: hashedPassword,
           salt, 
+          twoFaSecret: secret.base32,
         },
       });
 
       logger.info(`User created successfully: ${sanitizedName} (${sanitizedEmail})`);
+
+      const twoFAtoken = speakeasy.totp({
+        secret: secret.base32,
+        encoding: 'base32',
+      });
+
+      console.log(`2FA code for ${email}: ${twoFAtoken}`);
+
 
       const token = jwt.sign(
         { userId: user.id, email: user.email },

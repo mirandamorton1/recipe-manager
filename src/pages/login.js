@@ -9,6 +9,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [twoFactorCode, setTwoFactorCode] = useState("");
+  const [isTwoFactor, setIsTwoFactor] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -23,20 +25,33 @@ const Login = () => {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, twoFAToken: twoFactorCode }),
       });
 
+      const data = await res.json();
+
       if (res.status === 403) {
-        const data = await res.json();
-        alert(data.error); // Show an alert for inactive account
+        alert(data.error); 
         return;
+      }
+
+      if (res.status === 401) {
+        if (data.error === "Invalid 2FA code") {
+          setError("Invalid 2FA code");
+          return;
+        }
+        if (data.error === "2FA required") {
+          setIsTwoFactor(true);
+          setError("Please enter your 2FA code");
+          return;
+        }
       }
       
       if (!res.ok) {
         throw new Error("Login failed");
       }
 
-      const { token, user } = await res.json(); 
+      const { token, user } = data; 
       console.log("Login response:", { token, user });
 
       document.cookie = `token=${token}; path=/;`; 
@@ -84,6 +99,18 @@ const Login = () => {
             disabled={loading}
           />
         </div>
+        {isTwoFactor && (
+          <div className={styles.inputGroup}>
+            <label htmlFor="twoFactorCode">2FA Code</label>
+            <input
+              type="text"
+              id="twoFactorCode"
+              value={twoFactorCode}
+              onChange={(e) => setTwoFactorCode(e.target.value)}
+              required
+            />
+          </div>
+        )}
         <button type="submit" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </button>

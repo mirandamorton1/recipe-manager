@@ -23,7 +23,8 @@ model User {
   role      Role     @default(USER)           
   recipes   Recipe[]                         
   createdAt DateTime @default(now())            
-  updatedAt DateTime @updatedAt                 
+  updatedAt DateTime @updatedAt 
+  twoFaSecret String?                
 }
 
 model Recipe {
