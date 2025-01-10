@@ -22,9 +22,9 @@ const Dashboard = () => {
   const [showIngredientsModal, setShowIngredientsModal] = useState(false);
   const [showInstructionsModal, setShowInstructionsModal] = useState(false);
   const [showNotesModal, setShowNotesModal] = useState(false);
-  
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [filterType, setFilterType] = useState("");
   const router = useRouter();
 
   const sidebarRef = useRef(null);
@@ -36,6 +36,12 @@ const Dashboard = () => {
   const addRecipe = (newRecipe) => {
     setRecipes((prevRecipes) => [...prevRecipes, newRecipe]);
   };
+
+  const filteredRecipes = recipes.filter((recipe) =>
+    filterType
+      ? recipe.type?.toLowerCase().includes(filterType.toLowerCase())
+      : true
+  );
 
   const handleDeleteClick = (recipe) => {
     console.log("Deleting recipe:", recipe);
@@ -98,7 +104,7 @@ const Dashboard = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedFields), 
+      body: JSON.stringify(updatedFields),
     });
 
     if (res.ok) {
@@ -180,10 +186,13 @@ const Dashboard = () => {
   const handleClickOutside = useCallback((event) => {
     if (
       (sidebarRef.current && sidebarRef.current.contains(event.target)) ||
-      (ingredientsModalRef.current && ingredientsModalRef.current.contains(event.target)) ||
-      (instructionsModalRef.current && instructionsModalRef.current.contains(event.target)) ||
+      (ingredientsModalRef.current &&
+        ingredientsModalRef.current.contains(event.target)) ||
+      (instructionsModalRef.current &&
+        instructionsModalRef.current.contains(event.target)) ||
       (notesModalRef.current && notesModalRef.current.contains(event.target)) ||
-      (locationModalRef.current && locationModalRef.current.contains(event.target))
+      (locationModalRef.current &&
+        locationModalRef.current.contains(event.target))
     ) {
       return;
     }
@@ -210,8 +219,28 @@ const Dashboard = () => {
         <button className={styles.menuButton} onClick={toggleSidebar}>
           <FiMenu size={24} />
         </button>
-        <h1>{user.name}&apos;s Recipe Box
-        </h1>
+        <h1>{user.name}&apos;s Recipe Box</h1>
+        <div className={styles.sortDropdown}>
+          <label htmlFor="sort-by-type">Sort by Type</label>
+          <select
+            id="sort-by-type"
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}
+          >
+            <option value="">All</option>
+            <option value="Chicken">Chicken</option>
+            <option value="Pork">Pork</option>
+            <option value="Beef">Beef</option>
+            <option value="Soup">Soup</option>
+            <option value="Veggie">Veggie</option>
+            <option value="Pasta">Pasta</option>
+            <option value="Side">Side</option>
+            <option value="App">App</option>
+            <option value="Bread">Bread</option>
+            <option value="Dessert">Dessert</option>
+            <option value="Sauce">Sauce</option>
+          </select>
+        </div>
       </div>
 
       <Sidebar
@@ -226,31 +255,33 @@ const Dashboard = () => {
         ref={sidebarRef}
       />
 
-<div className={styles.content}>
-      {recipes.length === 0 ? (
-        <div className={styles.noRecipesWrapper}>
-        <p className={styles.noRecipesMessage}>
-          You have no recipes! Add a new recipe to get started.
-        </p>
+      <div className={styles.content}>
+        {filteredRecipes.length === 0 ? (
+          <div className={styles.noRecipesWrapper}>
+            <p className={styles.noRecipesMessage}>
+              {filterType
+                ? `No recipes found for type "${filterType}".`
+                : "You have no recipes! Add a new recipe to get started."}
+            </p>
+          </div>
+        ) : (
+          filteredRecipes.map((recipe) => (
+            <RecipeCard
+              key={recipe.id}
+              recipe={recipe}
+              favorites={favorites}
+              handleFavoriteToggle={handleFavoriteToggle}
+              handleDeleteClick={handleDeleteClick}
+              handleEditRecipe={handleEditRecipe}
+              setShowIngredientsModal={setShowIngredientsModal}
+              setShowInstructionsModal={setShowInstructionsModal}
+              setShowLocationModal={setShowLocationModal}
+              setShowNotesModal={setShowNotesModal}
+              setSelectedRecipe={setSelectedRecipe}
+            />
+          ))
+        )}
       </div>
-      ) : (
-        recipes.map((recipe) => (
-          <RecipeCard
-            key={recipe.id}
-            recipe={recipe}
-            favorites={favorites}
-            handleFavoriteToggle={handleFavoriteToggle}
-            handleDeleteClick={handleDeleteClick}
-            handleEditRecipe={handleEditRecipe}
-            setShowIngredientsModal={setShowIngredientsModal}
-            setShowInstructionsModal={setShowInstructionsModal}
-            setShowLocationModal={setShowLocationModal}
-            setShowNotesModal={setShowNotesModal}
-            setSelectedRecipe={setSelectedRecipe}
-          />
-        ))
-      )}
-    </div>
 
       {isConfirmationModalOpen && (
         <ConfirmationModal
