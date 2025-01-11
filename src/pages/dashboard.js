@@ -25,6 +25,7 @@ const Dashboard = () => {
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [filterType, setFilterType] = useState("");
+  const [searchTitle, setSearchTitle] = useState("");
   const router = useRouter();
 
   const sidebarRef = useRef(null);
@@ -37,11 +38,17 @@ const Dashboard = () => {
     setRecipes((prevRecipes) => [...prevRecipes, newRecipe]);
   };
 
-  const filteredRecipes = recipes.filter((recipe) =>
-    filterType
+  const filteredRecipes = recipes.filter((recipe) => {
+    const matchesType = filterType
       ? recipe.type?.toLowerCase().includes(filterType.toLowerCase())
-      : true
-  );
+      : true;
+  
+    const matchesSearch = searchTitle
+      ? recipe.title?.toLowerCase().includes(searchTitle.toLowerCase())
+      : true;
+  
+    return matchesType && matchesSearch;
+  });
 
   const handleDeleteClick = (recipe) => {
     console.log("Deleting recipe:", recipe);
@@ -240,6 +247,15 @@ const Dashboard = () => {
             <option value="Dessert">Dessert</option>
             <option value="Sauce">Sauce</option>
           </select>
+          <label htmlFor="search">Search by title: </label>
+          <input
+            type="text"
+            id="search"
+            placeholder="Search recipes..."
+            value={searchTitle}
+            onChange={(e) => setSearchTitle(e.target.value)}
+            className={styles.searchInput}
+          />
         </div>
       </div>
 
