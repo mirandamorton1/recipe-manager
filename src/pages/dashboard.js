@@ -227,8 +227,8 @@ const Dashboard = () => {
           <FiMenu size={24} />
         </button>
         <h1>{user.name}&apos;s Recipe Box</h1>
-        <div className={styles.sortDropdown}>
-          <label htmlFor="sort-by-type">Sort by Type</label>
+        <div className={styles.sortSearch}>
+          <label htmlFor="sort-by-type">Sort by Type:</label>
           <select
             id="sort-by-type"
             value={filterType}
@@ -247,7 +247,7 @@ const Dashboard = () => {
             <option value="Dessert">Dessert</option>
             <option value="Sauce">Sauce</option>
           </select>
-          <label htmlFor="search">Search by title: </label>
+          <label htmlFor="search">Search by Title: </label>
           <input
             type="text"
             id="search"

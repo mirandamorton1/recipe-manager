@@ -29,6 +29,33 @@
     color: #344e41;
   }
 
+  .sortSearch {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
+
+    label {
+      font-size: 1.25rem;
+      color: #344e41;
+    }
+
+    select,
+    input {
+      padding: 5px 10px;
+      font-size: 1rem;
+      border: 1px solid #344e41;
+      border-radius: 4px;
+      background-color: #ffffff;
+      color: #344e41;
+      outline: none; 
+
+      &:focus {
+        border-color: #588157; 
+      }
+    }
+  }
+
   .content {
     margin-top: 20px;
     padding: 20px;
@@ -38,13 +65,13 @@
   }
 
   .noRecipesWrapper {
-    background-color: #ffffff; 
-    padding: 20px; 
-    border: 1px solid #dad7cd;             
-    border-radius: 8px;         
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  
-    text-align: center;         
-    margin-top: 20px;          
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #dad7cd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: 20px;
   }
 
   .noRecipesMessage {
@@ -54,5 +81,4 @@
     margin-top: 20px;
     font-weight: bold;
   }
-  
 }
