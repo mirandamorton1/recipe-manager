@@ -1,77 +1,56 @@
-# :trophy: Identity Tech Challenge
+# Recipe Manager
 
-Your goal is to build a sample full-stack app with a functionally-complete identity management layer.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-- [Restrictions](#hear_no_evil-restrictions)
-- [Getting started](#star2-getting-started)
-- [Desired features](#clipboard-desired-features)
-- [Submitting your app](#checkered_flag-submitting-your-app)
-- [FAQ's](#question-faqs)
+## Description
 
-## :hear_no_evil: Restrictions
+This app allows users manage all of their recipes in one place. This app acts as a living index/reference to all of your recipes. You can add, edit, favorite, and delete recipes as you see fit. You can also search for recipes by name, ingredient, or category. 
 
-We need a consistent framework to evaluate your work fairly, so please abide by the following rules:
+## Additional Features
+You can sign up a new user, login an existing user, pages & API points are authorized, and there is 2FA for added security.
 
-1.  Build your app using the included [Next.js](https://nextjs.org/) + [Docker Compose](https://docs.docker.com/compose/) scaffold.
-2.  Stick with vanilla **JavaScript**, not a compiled language such as TypeScript or Elm.
-3.  **Roll your own authentication.**  No reaching for [Passport](https://classic.yarnpkg.com/en/package/passport) or any other prebuilt auth library.
+## Table of Contents
 
-Outside of that, you can take the app in any direction you like, with any auth strategy that you prefer. :thumbsup:
+- [Description](#description)
+- [Additional Features](#additional-features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
+- [Technology Used](#technology-used)
+- [Contributors](#contributors)
+- [Questions](#questions)
 
-## :star2: Getting started
+### Installation:
 
-First clone this repo, and then run the following in your terminal:
+To install, clone the repository and place it in your terminal.
 
-```
-docker-compose up -d --build
-```
+### Usage:
 
-Then visit http://localhost:3000 in your browser.
+To use this app, run the following command: `docker-compose up -d --build` then visit `http://localhost:3000` in your browser. Set your .env variables to allow services to communicate with one another, as well as prisma to connect to your database.
+To ensure database connection, run `docker-compose exec prisma npx prisma migrate dev --name init` to create the database and tables. 
 
-## :clipboard: Desired features
+### License
 
-Please **check the box** for each one that you implement to help us know what to look out for.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-### :white_check_mark: Bare minimum:
-- [x] Sign up a new user
-- [x] Login an existing user
-       (Login with sara@mail.com passsword: myrecipes1)
-- [x] Logout a user
+`This project is licensed under MIT`
 
-### :heart_eyes: Bonus points:
-- [x] Use a Postgres database
-- [x] Auto-login after signup
-- [x] Allow user profile updates
-- [x] Authorize pages and API endpoints
-- [x] Add request logging
-- [x] Clean PII from logs
-- [x] Make it look pretty with SCSS modules
-- [x] Add an admin page to manage users
-      (Go to localhost:3000/admin to login with: admin1@mail.com password: secure_password)
-- [ ] Enforce 2FA *
+### Technology Used:
 
-\* **Note:** Multiple 2FA strategies exist.  If you choose to implement one that "sends" a code by email or text, you can emulate that by logging the code to your local terminal.  _(No need to pay real :dollar: to complete this challenge. :sweat_smile:)_
+- Javascript
+- Docker
+- Prisma
+- Next.js
+- PostgreSQL
 
-## :checkered_flag: Submitting your app
-1.  Feel free to **push directly to a new branch on this repo** as you work on your solution.  Consider it your personal sandbox. 👍
-1.  Github Classroom will autogenerate a "review PR" for you branch.  **Please DON'T merge that.**
-1.  When you're ready to submit your solution, **send a link for your branch** to the recruiter.
-1.  Our team will **review your solution** within a few days.
-1.  Aftward, we will **follow-up with you** to talk about next steps.
+### Contributors:
 
-## :question: FAQ's
+To contribute to this project, clone this repo locally and commit your code on a separate branch.
 
-> Q: Can I ask questions about the challenge?<br/>
-> A: Always.
+#### GitHub:
 
-> Q: Can I use \<insert npm library name here\>?<br/>
-> A: Yes, but please still roll your own authentication layer.
+- https://github.com/mirandamorton1
 
-> Q: Can I use a database other than Postgres?<br/>
-> A: We use multiple datastores in our apps, and we try to use the best one for the situation at hand.  But we use Postgres A LOT.  To help us evaluate consistently, if you choose to use a database, please stick with Postgres.
+#### Email:
 
-> Q: How can I add Postgres to my app quickly?<br/>
-> A: Uncomment the related lines in the `docker-compose.yml`, and you'll have a functioning Postgres instance to play with immediately.
-
-> Q: Why Next.js?<br/>
-> A: Because we already use it in-house, and because it allows you to show-off your mad full-stack skills all in one place.
+- miranda.morton1@gmail.com
