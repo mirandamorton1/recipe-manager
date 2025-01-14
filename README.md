@@ -9,6 +9,14 @@ This app allows users manage all of their recipes in one place. This app acts as
 ## Additional Features
 You can sign up a new user, login an existing user, pages & API points are authorized, and there is 2FA for added security.
 
+![Screenshot 2025-01-14 at 9 16 56 AM](https://github.com/user-attachments/assets/5cb300c6-f8d6-4d49-bd76-2b5db03d8e1b)
+
+![Screenshot 2025-01-14 at 9 17 26 AM](https://github.com/user-attachments/assets/8f1b9acd-fd01-4a76-b44a-bd727189fac5)
+
+![Screenshot 2025-01-14 at 9 17 49 AM](https://github.com/user-attachments/assets/26735555-2298-4323-8fa3-655e1b754182)
+
+
+
 ## Table of Contents
 
 - [Description](#description)
